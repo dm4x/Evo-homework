@@ -36,7 +36,7 @@ final case class Point(x: Double, y: Double, z: Option[Double] = None) extends S
    */
   override def move(dx: Double, dy: Double, dz: Double = 0): Point = z match {
     case None => Point(x + dx, y + dy, None)
-    case _ => Point(x + dx, y + dy, Some(z.get + dz))
+    case Some(z) => Point(x + dx, y + dy, Some(z + dz))
   }
 }
 
@@ -51,17 +51,17 @@ final case class Sphere(centerX: Double, centerY: Double, centerZ: Option[Double
 
   override def minZ: Option[Double] = z match {
     case None => None
-    case _ => Some(z.get - radius)
+    case Some(z) => Some(z - radius)
   }
 
   override def maxZ: Option[Double] = z match {
     case None => None
-    case _ => Some(z.get + radius)
+    case Some(z) => Some(z + radius)
   }
 
   override def move(dx: Double, dy: Double, dz: Double = 0): Sphere = centerZ match {
     case None => Sphere(centerX + dx, centerY + dy, None, radius)
-    case _ => Sphere(centerX + dx, centerY + dy, Some(centerZ.get + dz), radius)
+    case Some(centerZ) => Sphere(centerX + dx, centerY + dy, Some(centerZ + dz), radius)
   }
 
   def area: Double = centerZ match {
@@ -80,29 +80,26 @@ final case class Cube(x: Double, y: Double, z: Option[Double] = None, side: Doub
   override def maxX: Double = x + side
   override def minY: Double = y
   override def maxY: Double = y + side
-  override def minZ: Option[Double] = z match {
-    case None => None
-    case _ => Some(z.get)
-  }
+  override def minZ: Option[Double] = z
 
   override def maxZ: Option[Double] = z match {
     case None => None
-    case _ => Some(z.get + side)
+    case Some(z) => Some(z + side)
   }
 
   override def move(dx: Double, dy: Double, dz: Double = 0): Cube = z match {
     case None => Cube(x + dx, y + dy, None, side)
-    case _ => Cube(x + dx, y + dy, Some(z.get + dz), side)
+    case Some(z) => Cube(x + dx, y + dy, Some(z + dz), side)
   }
 
   def area: Double = z match {
     case None => side * side
-    case _ => 6 * side * side
+    case Some(_) => 6 * side * side
   }
 
   def volume: Double = z match {
     case None => 0.0
-    case _ => side * side * side
+    case Some(_) => side * side * side
   }
 }
 
@@ -111,18 +108,16 @@ final case class Cuboid(x: Double, y: Double, z: Option[Double] = None, height: 
   override def maxX: Double = x + width
   override def minY: Double = y
   override def maxY: Double = y + height
-  override def minZ: Option[Double] = z match {
-    case None => None
-    case _ => Some(z.get)
-  }
+  override def minZ: Option[Double] = z
+
   override def maxZ: Option[Double] = z match {
     case None => None
-    case _ => Some(z.get + depth)
+    case Some(z) => Some(z + depth)
   }
 
   override def move(dx: Double, dy: Double, dz: Double = 0): Cuboid = z match {
     case None => Cuboid(x + dx, y + dy, None, height, width, depth)
-    case _ => Cuboid(x + dx, y + dy, Some(z.get + dz), height, width, depth)
+    case Some(z) => Cuboid(x + dx, y + dy, Some(z + dz), height, width, depth)
   }
 
   def area: Double = depth match {
@@ -150,13 +145,13 @@ final case class Triangle(A: Point, B: Point, C: Point) extends Shape {
 
   override def move(dx: Double, dy: Double, dz: Double = 0): Triangle = z match {
     case None => Triangle(
-      Point(A.x + dx, A.y + dy),
-      Point(B.x + dx, B.y + dy),
-      Point(C.x + dx, C.y + dy))
-    case _ => Triangle(
-      Point(A.x + dx, A.y + dy, Some(A.z.get + dz)),
-      Point(B.x + dx, B.y + dy, Some(B.z.get + dz)),
-      Point(C.x + dx, C.y + dy, Some(C.z.get + dz)))
+      Point(x + dx, y + dy),
+      Point(x + dx, y + dy),
+      Point(x + dx, y + dy))
+    case Some(z) => Triangle(
+      Point(x + dx, y + dy, Some(z + dz)),
+      Point(x + dx, y + dy, Some(z + dz)),
+      Point(x + dx, y + dy, Some(z + dz)))
   }
 
   def area: Double = ???
