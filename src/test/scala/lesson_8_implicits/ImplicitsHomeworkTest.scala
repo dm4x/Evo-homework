@@ -5,7 +5,6 @@ import org.scalatest.matchers.should.Matchers
 import lesson_8_implicits.TypeclassTask._
 import lesson_8_implicits.Task2._
 import lesson_8_implicits.Task3.ParseSyntax
-import lesson_8_implicits.Task2.User
 
 class ImplicitsHomeworkTest  extends AnyFlatSpec with Matchers{
 
@@ -14,14 +13,14 @@ class ImplicitsHomeworkTest  extends AnyFlatSpec with Matchers{
   }
 
   "Task 2" should "" in {
-    User("1", "Oleg").show shouldBe "User with id=1 and name=Oleg"
-    User("2", "Olga").show shouldBe "User with id=2 and name=Olga"
+    Task2.User("1", "Oleg").show shouldBe "User with id=1 and name=Oleg"
+    Task2.User("2", "Olga").show shouldBe "User with id=2 and name=Olga"
   }
 
   "Task 3" should "" in {
     "lalala".parse shouldBe Left("unknown format")
     "{id=1,name=Oleg}".parse shouldBe Left("unknown format")
-    "{id=1, name=Oleg}".parse shouldBe Right(User(id="1", name="Oleg"))
+    "{id=1, name=Oleg}".parse shouldBe Right(Task3.User(id="1", name="Oleg"))
   }
   
 }

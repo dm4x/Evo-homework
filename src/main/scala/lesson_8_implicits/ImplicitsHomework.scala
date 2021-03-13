@@ -13,15 +13,12 @@ object TypeclassTask extends App{
   }
 
   implicit class HashCodeSyntax[A](x: A) {
-    // TODO: Implement syntax so I can "abc".hash
     def hash(implicit h: HashCode[A]): String = h.hash(x)
   }
 
-  // TODO: make an instance for String
   implicit val stringInstance: HashCode[String] = baseString => s"${baseString.hashCode}-some-hash-magic"
 
-  // TODO: write "abc".hash to check everything
-  "abc".hash
+//  "abc".hash
 }
 
 // make as many exercises as you can
@@ -87,8 +84,8 @@ object Task4 {
     def === (b: A)(implicit impl: Equals[A]): Boolean = impl.equ(a, b)
   }
 
-  2 === 2
-  2 === "2"
+//  2 === 2
+//  2 === "2"
 }
 
 
