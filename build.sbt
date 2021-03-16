@@ -16,4 +16,7 @@ libraryDependencies ++= Seq(
   "org.scalatestplus" %% "selenium-2-45" % scalaTestVersion % Test,
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.typelevel" %% "cats-effect" % catsEffectVersion
+
 )
+
+addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.1" cross CrossVersion.full)
